@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './shared/typeorm/typeorm.config.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import * as redisStore from 'cache-manager-redis-store';
-import { MoviesModule } from './movies/movies.module';
+import { MoviesModule } from './movies';
 
 @Module({
   imports: [
