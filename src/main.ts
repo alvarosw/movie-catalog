@@ -1,18 +1,21 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
-const port = process.env.PORT || 4000;
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(port);
+  const port = process.env.PORT;
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+
+  await app.listen(port, () => {
+    console.debug(
+      `
+      App running at:
+      - Local: http://localhost:${port}
+    `,
+    );
+  });
 }
 
-bootstrap().then((_) => {
-  console.debug(
-    `
-    App running at:
-    - Local: http://localhost:${port}
-  `,
-  );
-});
+bootstrap();
