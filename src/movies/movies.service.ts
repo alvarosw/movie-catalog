@@ -11,8 +11,11 @@ export class MoviesService {
     @InjectRepository(Movie) private readonly repository: Repository<Movie>,
   ) {}
 
-  create(createMovieDto: CreateMovieDto) {
-    return this.repository.save(createMovieDto);
+  async create(createMovieDto: CreateMovieDto) {
+    const movie = await this.repository.save(createMovieDto);
+    delete movie.id;
+
+    return movie;
   }
 
   findAll() {
@@ -26,7 +29,10 @@ export class MoviesService {
   async update(id: number, updateMovieDto: UpdateMovieDto) {
     await this.repository.update(id, updateMovieDto);
 
-    return this.repository.findOne({ where: { id } });
+    const movie = await this.repository.findOne({ where: { id } });
+    delete movie.id;
+
+    return movie;
   }
 
   async remove(id: number) {
