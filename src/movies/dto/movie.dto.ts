@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Movie } from '../entities/movie.entity';
 
 export class MovieDto {
@@ -19,6 +19,8 @@ export class MovieDto {
   })
   name: Movie['name'];
 
+  @IsOptional()
+  @IsString()
   @ApiProperty({
     description: 'Sinopse do filme',
     type: String,
@@ -27,6 +29,8 @@ export class MovieDto {
   })
   synopsis: Movie['synopsis'];
 
+  @IsOptional()
+  @IsString()
   @ApiProperty({
     description: 'Url para uma imagem do filme',
     type: String,
@@ -34,6 +38,8 @@ export class MovieDto {
   })
   image: Movie['image'];
 
+  @IsOptional()
+  @IsBoolean()
   @ApiProperty({
     description:
       'Propriedade Lançamento. Se o filme foi lançado, verdadeiro, se não, falso',
