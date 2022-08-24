@@ -14,12 +14,20 @@ import { MovieDto } from './dto/movie.dto';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiHeader,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
 @Controller('movies')
 @ApiTags('movie')
+@ApiHeader({
+  name: 'Authorization',
+  description: 'Authorization Token',
+  allowEmptyValue: false,
+  required: true,
+  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ...',
+})
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
