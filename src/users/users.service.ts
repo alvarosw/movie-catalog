@@ -1,4 +1,9 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -7,6 +12,7 @@ import { compare, hashSync } from 'bcrypt';
 import { LoginUserDto } from './dto/login-user.dto';
 import { sign } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
+import { validateOrReject } from 'class-validator';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +23,8 @@ export class UsersService {
 
   async register(registerDto: CreateUserDto) {
     const password = this.toHashPassword(registerDto.password);
+    await this.validateEmailUniquenessOrReject(registerDto.email);
+
     const user = await this.repository.save({ ...registerDto, password });
     delete user.id;
     delete user.password;
@@ -38,8 +46,14 @@ export class UsersService {
     return this.generateToken(user);
   }
 
+  async validateEmailUniquenessOrReject(email: string) {
+    const existingUser = await this.repository.findOneBy({ email });
+
+    if (existingUser) throw new BadRequestException('Email already exists.');
+  }
+
   toHashPassword(password: string) {
-    const saltOrRounds = this.env.get('BCRYPT_SALT_OR_ROUNDS');
+    const saltOrRounds = +this.env.get('BCRYPT_SALT_OR_ROUNDS');
     return hashSync(password, saltOrRounds);
   }
 
