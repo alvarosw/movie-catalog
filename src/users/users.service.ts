@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { compare, hashSync } from 'bcrypt';
-import { LoginUserDto } from './dto/login-user.dto';
+import { LoginRequestDto } from './dto/login-request.dto';
 import { sign } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 
@@ -31,7 +31,7 @@ export class UsersService {
     return user;
   }
 
-  async login(loginDto: LoginUserDto) {
+  async login(loginDto: LoginRequestDto) {
     const user = await this.repository.findOneBy({ email: loginDto.email });
     if (!user) throw new HttpException('Email not registered.', 401);
 

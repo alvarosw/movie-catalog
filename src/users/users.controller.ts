@@ -9,7 +9,7 @@ import {
   ApiUnauthorizedResponse,
   OmitType,
 } from '@nestjs/swagger';
-import { LoginUserDto } from './dto/login-user.dto';
+import { LoginRequestDto } from './dto/login-request.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
 
 @Controller('users')
@@ -33,7 +33,7 @@ export class UsersController {
     type: () => LoginResponseDto,
     description: 'Login bem sucedido',
   })
-  login(@Body() loginUserDto: LoginUserDto) {
+  login(@Body() loginUserDto: LoginRequestDto) {
     return this.moviesService.login(loginUserDto);
   }
 }
