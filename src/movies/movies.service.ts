@@ -37,7 +37,5 @@ export class MoviesService {
 
   async remove(id: number) {
     await this.repository.delete({ id });
-
-    return { deleted: true };
   }
 }

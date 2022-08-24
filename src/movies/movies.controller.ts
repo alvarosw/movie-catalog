@@ -63,10 +63,7 @@ export class MoviesController {
   }
 
   @Delete(':id')
-  @ApiOkResponse({
-    type: () => ({ deleted: true }),
-    description: 'Info de sucesso',
-  })
+  @ApiOkResponse()
   remove(@Param('id') id: string) {
     return this.moviesService.remove(+id);
   }
