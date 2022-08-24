@@ -12,7 +12,6 @@ import { compare, hashSync } from 'bcrypt';
 import { LoginUserDto } from './dto/login-user.dto';
 import { sign } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
-import { validateOrReject } from 'class-validator';
 
 @Injectable()
 export class UsersService {
