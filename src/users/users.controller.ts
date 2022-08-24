@@ -10,6 +10,7 @@ import {
   OmitType,
 } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/login-user.dto';
+import { LoginResponseDto } from './dto/login-response.dto';
 
 @Controller('users')
 @ApiTags('user')
@@ -29,7 +30,7 @@ export class UsersController {
   @Post('/login')
   @ApiUnauthorizedResponse()
   @ApiOkResponse({
-    type: () => ({ token: String, expiresIn: Number }),
+    type: () => LoginResponseDto,
     description: 'Login bem sucedido',
   })
   login(@Body() loginUserDto: LoginUserDto) {
