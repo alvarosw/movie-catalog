@@ -5,6 +5,14 @@ import * as redisStore from 'cache-manager-redis-store';
 import { MoviesModule } from './movies/movies.module';
 import { UsersModule } from './users/users.module';
 import { Auth } from './common/middleware/auth.middleware';
+import { ConfigModule } from '@nestjs/config';
+import {
+  CacheInterceptor,
+  CacheModule,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 
 @Module({
   imports: [
