@@ -6,6 +6,8 @@ import {
   Param,
   Delete,
   Put,
+  UseInterceptors,
+  CacheInterceptor,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -28,6 +30,7 @@ import {
   required: true,
   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ...',
 })
+@UseInterceptors(CacheInterceptor)
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
